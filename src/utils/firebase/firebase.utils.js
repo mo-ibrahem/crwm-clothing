@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, signInWithRedirect, signInWithPopup ,GoogleAuthProvider , createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, signInWithRedirect, signInWithPopup ,GoogleAuthProvider, signOut , createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
 import{
   getFirestore,
   doc,
@@ -49,15 +49,17 @@ const firebaseConfig = {
       }
     }
     return userDocRef
-  }
+  };
 
   export const createAuthUserWithEmailAndPassword = async (email,password)=>{
     if(!email|| !password) return;
     return await createUserWithEmailAndPassword(auth,email,password);
-  }
+  };
 
   export const createSignInWithEmailAndPassword = async (email,password)=>{
     if(!email|| !password) return;
     return await signInWithEmailAndPassword(auth, email,password);
   
-  }
+  };
+
+  export const signOutUser = async () => await signOut(auth);
