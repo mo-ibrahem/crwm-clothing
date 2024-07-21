@@ -1,0 +1,1 @@
+export const selecCurrentUser = (state) => state.user.currentUser
