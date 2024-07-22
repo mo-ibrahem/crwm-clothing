@@ -5,11 +5,13 @@ import ProductCard from '../../components/product-card/product-card.component'
 import { useSelector } from 'react-redux'
 import { selectCategoriesMap } from '../../store/categories/category.selector'
 const Category = ()=>{
+    console.log('render/re-rendering category component')
     const {category} = useParams();
     const categoriesMap = useSelector(selectCategoriesMap);
     const [products, setProducts] = useState(categoriesMap[category]);
 
     useEffect(()=>{
+        console.log('effect fired calling setProducts')
         setProducts(categoriesMap[category])
     },[categoriesMap,category])
 
