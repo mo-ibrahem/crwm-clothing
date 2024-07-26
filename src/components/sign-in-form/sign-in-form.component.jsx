@@ -1,41 +1,40 @@
 import { useState } from "react";
-import {   createSignInWithEmailAndPassword } from "../../utils/firebase/firebase.utils";
-import { signInWithGooglePopup } from "../../utils/firebase/firebase.utils"
 import FormInput from "../form-input/form-input.component";
 import './sign-in-form.styles.scss'
 import Button from "../button/button.component";
+import { useDispatch } from "react-redux";
+import { emailSignInStart, googleSignInStart } from "../../store/user/user.action";
 
 const defaultFormFields= {
     email:'',
     password:'',
 }
 
-const SignInForm = () =>{
+const SignInForm = () => {
 
+    const dispatch = useDispatch();
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email,password} = formFields;
-
-    const signInWithGoogle = async ()=> {
-     await signInWithGooglePopup();
+  
+    const signInWithGoogle = async () => {
+        dispatch(googleSignInStart())
     }
- 
-    const resetFormFields= () =>{
+
+    const resetFormFields = () =>{
         setFormFields(defaultFormFields);
     }
 
     const handleSubmit = async(event)=>{
         event.preventDefault();
         try{
-            await createSignInWithEmailAndPassword(email,password)
+            dispatch(emailSignInStart(email, password))
             resetFormFields()
         }catch(error){
-
             switch(error.code){
                 case 'auth/wrong-password': alert("Please enter right password"); break;
                 case 'auth/user-not-found':alert("User not found"); break;
                 default: console.log(error);
             }
-            
         }
     }
 

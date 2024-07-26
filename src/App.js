@@ -10,17 +10,13 @@ import { setCurrentUser } from './store/user/user.action';
 import { createUserDocumentFromAuth } from './utils/firebase/firebase.utils';
 import { onAuthStateChangeListener } from './utils/firebase/firebase.utils';
 import { useDispatch } from 'react-redux';
-
+import { getCurrentUser } from './utils/firebase/firebase.utils';
+import { checkUserSession } from './store/user/user.action';
 const App = () => {
 
   const dispatch = useDispatch()
   useEffect(() =>{
-    const unsubscribe = onAuthStateChangeListener((user)=>{
-        dispatch(setCurrentUser(user))
-        if(user) createUserDocumentFromAuth(user);
-    })
-
-    return unsubscribe
+    dispatch(checkUserSession())
 },[])
 
 return(
